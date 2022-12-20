@@ -11,7 +11,9 @@ def autostart():
     subprocess.call([path])
 
 # Variables
-mod = 'mod4'                # Window key
+mod4 = 'mod4'               # Window key
+mod1 = 'mod1'               # Alt key
+tab = 'Tab'                 # Tab key
 ctrl = 'control'            # Control
 shift = 'shift'             # Shift
 up = 'Up'                   # Up arrow
@@ -28,31 +30,34 @@ terminal = 'alacritty'
 # at https://docs.qtile.org/en/latest/manual/config/lazy.html
 keys = [
     # Switch between windows
-    Key([mod, ctrl], left, lazy.layout.left(), desc='Move focus to left'),
-    Key([mod, ctrl], right, lazy.layout.right(), desc='Move focus to right'),
-    Key([mod, ctrl], down, lazy.layout.down(), desc='Move focus down'),
-    Key([mod, ctrl], up, lazy.layout.up(), desc='Move focus up'),
-    Key([mod], space, lazy.layout.next(), desc='Move window focus to other window'),
+    Key([mod4, ctrl], left, lazy.layout.left(), desc='Move focus to left'),
+    Key([mod4, ctrl], right, lazy.layout.right(), desc='Move focus to right'),
+    Key([mod4, ctrl], down, lazy.layout.down(), desc='Move focus down'),
+    Key([mod4, ctrl], up, lazy.layout.up(), desc='Move focus up'),
+
+    Key([mod4], space, lazy.layout.next(), desc='Move window focus to other window'),
+    Key([mod1], tab, lazy.layout.next(), desc='Move window focus to other window'),
+    Key([mod1, shift], tab, lazy.layout.previous(), desc='Move window focus to other window'),
 
     # Move windows between left/right columns or move up/down in current stack.
     # Moving out of range in Columns layout will create new column.
-    Key([mod, shift], left, lazy.layout.shuffle_left(), desc='Move window to the left'),
-    Key([mod, shift], right, lazy.layout.shuffle_right(), desc='Move window to the right'),
-    Key([mod, shift], down, lazy.layout.shuffle_down(), desc='Move window down'),
-    Key([mod, shift], up, lazy.layout.shuffle_up(), desc='Move window up'),
+    Key([mod4, shift], left, lazy.layout.shuffle_left(), desc='Move window to the left'),
+    Key([mod4, shift], right, lazy.layout.shuffle_right(), desc='Move window to the right'),
+    Key([mod4, shift], down, lazy.layout.shuffle_down(), desc='Move window down'),
+    Key([mod4, shift], up, lazy.layout.shuffle_up(), desc='Move window up'),
 
     # Launch terminal
-    Key([mod], enter, lazy.spawn(terminal), desc='Launch terminal'),
+    Key([mod4], enter, lazy.spawn(terminal), desc='Launch terminal'),
 
     # Toggle between different layouts as defined below
-    Key([mod], 'Tab', lazy.next_layout(), desc='Toggle between layouts'),
-    Key([mod], 'q', lazy.window.kill(), desc='Kill focused window'),
-    Key([mod, ctrl], 'r', lazy.reload_config(), desc='Reload the config'),
-    Key([mod], 'r', lazy.spawncmd(), desc='Spawn a command using a prompt widget'),
+    Key([mod4], 'Tab', lazy.next_layout(), desc='Toggle between layouts'),
+    Key([mod4], 'q', lazy.window.kill(), desc='Kill focused window'),
+    Key([mod4, ctrl], 'r', lazy.reload_config(), desc='Reload the config'),
+    Key([mod4], 'r', lazy.spawncmd(), desc='Spawn a command using a prompt widget'),
 
     # Workspaces
-    Key([mod], left, lazy.screen.prev_group(), desc='Go to the previous workspace'),
-    Key([mod], right, lazy.screen.next_group(), desc='Go to the next workspace'),
+    Key([mod4], left, lazy.screen.prev_group(), desc='Go to the previous workspace'),
+    Key([mod4], right, lazy.screen.next_group(), desc='Go to the next workspace'),
 
     # Audio
     # Require 'alsa-utils' package
@@ -68,7 +73,7 @@ for i in groups:
         [
             # mod1 + letter of group = switch to group
             Key(
-                [mod],
+                [mod4],
                 'f' + i.name,
                 lazy.group[i.name].toscreen(),
                 desc='Switch to group {}'.format(i.name),
@@ -76,7 +81,7 @@ for i in groups:
 
             # mod1 + shift + letter of group = switch to & move focused window to group
             Key(
-                [mod, shift],
+                [mod4, shift],
                 'f' + i.name,
                 lazy.window.togroup(i.name, switch_group=True),
                 desc='Switch to & move focused window to group {}'.format(
@@ -93,8 +98,8 @@ layout_options = {
 }
 
 layouts = [
-    layout.MonadTall(**layout_options),
     layout.Max(**layout_options),
+    layout.MonadTall(**layout_options),
     layout.MonadWide(**layout_options),
     layout.Spiral(**layout_options),
     # layout.Columns(border_focus_stack=["#d75f5f", "#8f3d3d"], border_width=4),
@@ -118,10 +123,10 @@ widget_defaults = dict(
 
 extension_defaults = widget_defaults.copy()
 
-bar_margin = 0  # [8, 8, 0, 8]
-bar_border_width = 0  # [4, 16, 4, 16]
-bar_background = '#292d3e'  # '#292d3e',
-bar_border_color = '#292d3e'  # '#292d3e',
+bar_margin = 0 # [8, 8, 0, 8]
+bar_border_width = 0 # [4, 16, 4, 16]
+bar_background = '#1e2127'  # -- neosolarized '#292d3e',
+bar_border_color = '#1e2127'  # -- neosolarized '#292d3e',
 top = bar.Bar(
     [
         widget.WindowName(),
