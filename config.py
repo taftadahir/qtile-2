@@ -91,7 +91,7 @@ for i in groups:
     )
 
 layout_options = {
-    'margin': 0,
+    'margin': 8,
     'border_width': 0,
     'border_focus': '#d75f5f',
     'border_normal': '#8f3d3d'
@@ -123,8 +123,8 @@ widget_defaults = dict(
 
 extension_defaults = widget_defaults.copy()
 
-bar_margin = 0 # [8, 8, 0, 8]
-bar_border_width = 0 # [4, 16, 4, 16]
+bar_margin = [8, 8, 0, 8]
+bar_border_width = [4, 16, 4, 16]
 bar_background = '#1e2127'  # -- neosolarized '#292d3e',
 bar_border_color = '#1e2127'  # -- neosolarized '#292d3e',
 top = bar.Bar(
